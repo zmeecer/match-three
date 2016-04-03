@@ -3,9 +3,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "PACKAGE_ID"
-        version   = "PACKAGE_VERSION">
-    <name>PACKAGE_NAME</name>
-    <description>PACKAGE_DESCRIPTION</description>
+        version   = "APP_META.version">
+    <name>APP_META.name</name>
+    <description>APP_META.description</description>
     <author>PACKAGE_AUTHOR</author>
 
     <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.1.0" />

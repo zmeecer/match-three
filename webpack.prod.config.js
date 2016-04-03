@@ -6,6 +6,7 @@ var path = require("path");
 
 var publicFolderName = ".public";
 var packageFile = require('./package.json');
+var ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -25,12 +26,8 @@ module.exports = {
     new ExtractTextPlugin('application.css', {
       allChunks: true
     }),
-    new webpack.DefinePlugin({
-      PACKAGE_ID: packageFile.version,
-      PACKAGE_VERSION: packageFile.version,
-      PACKAGE_NAME: packageFile.name,
-      PACKAGE_DESCRIPTION: packageFile.description,
-      PACKAGE_AUTHOR: packageFile.author,
+    new ExtendedDefinePlugin({
+      APP_META: packageFile,
     })
   ],
   module: {
