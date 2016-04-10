@@ -60,6 +60,9 @@ module.exports = {
         test   : /\.(ttf|eot|svg|woff|otf)(\?[a-z0-9]+)?$/,
         loader : 'file'
       }
+    ],
+    postLoaders: [
+      { loader: "transform?brfs" }
     ]
   },
   postcss: [
