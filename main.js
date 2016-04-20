@@ -5,15 +5,23 @@ import React, {
   View
 } from 'react-native';
 
+const {width, height} = require('Dimensions').get('window');
+const size = 8;
+var cellSize = Math.floor(width / size);
+var letterSize = Math.floor(cellSize * .75);
+
 export default class MatchThree extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.tile}>
-          <Text style={styles.letter}>
-            A
-          </Text>
-        </View>
+        {[...Array(size)].map((x, xIndex) =>
+          [...Array(size)].map((y, yIndex) =>
+            <View key={xIndex*size+yIndex}
+                  style={styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}}>
+              <Text style={styles.letter}>A</Text>
+            </View>
+          )
+        )}
       </View>
     );
   }
@@ -21,14 +29,14 @@ export default class MatchThree extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: cellSize * size,
+    height: cellSize * size,
     backgroundColor: '#F5FCFF',
   },
   tile: {
-    width: 100,
-    height: 100,
+    position: 'absolute',
+    width: cellSize,
+    height: cellSize,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -36,6 +44,6 @@ const styles = StyleSheet.create({
   },
   letter: {
     color: '#333',
-    fontSize: 80,
+    fontSize: letterSize,
   },
 });
