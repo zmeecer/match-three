@@ -1,14 +1,14 @@
 import React, {
   Component,
+  Dimensions,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+} from 'react-native'
 
-const {width, height} = require('Dimensions').get('window');
-const size = 8;
-var cellSize = Math.floor(width / size);
-var letterSize = Math.floor(cellSize * .75);
+const size = 8
+const cellSize = Math.floor(Dimensions.get('window') / size)
+const letterSize = Math.floor(cellSize * .75)
 
 export default class MatchThree extends Component {
   render() {
@@ -16,14 +16,16 @@ export default class MatchThree extends Component {
       <View style={styles.container}>
         {[...Array(size)].map((x, xIndex) =>
           [...Array(size)].map((y, yIndex) =>
-            <View key={xIndex*size+yIndex}
-                  style={styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}}>
-              <Text style={styles.letter}>A</Text>
+            <View
+                key={xIndex*size+yIndex}
+                style={styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}}
+            >
+              <Text style={styles.letter}>B</Text>
             </View>
           )
         )}
       </View>
-    );
+    )
   }
 }
 
@@ -46,4 +48,4 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: letterSize,
   },
-});
+})
