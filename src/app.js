@@ -20,7 +20,7 @@ export default class MatchThree extends Component {
                 key={xIndex*size+yIndex}
                 style={styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}}
             >
-              <Text style={styles.letter}>B</Text>
+              <Text style={styles.letter}>{xIndex}-{yIndex}</Text>
             </View>
           )
         )}
