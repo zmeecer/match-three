@@ -2,11 +2,12 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 const {width, height} = require('Dimensions').get('window');
-const size = 8;
+const size = 6;
 var cellSize = Math.floor(width / size);
 var letterSize = Math.floor(cellSize * .75);
 
@@ -16,9 +17,12 @@ export default class MatchThree extends Component {
       <View style={styles.container}>
         {[...Array(size)].map((x, xIndex) =>
           [...Array(size)].map((y, yIndex) => (
-            <View key={xIndex*size+yIndex} style={[styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}]}>
-              <Text style={styles.letter}>{xIndex*size+yIndex}</Text>
-            </View>
+            <TouchableOpacity key={xIndex*size+yIndex}
+              onPress={() => console.log(xIndex*size+yIndex) }>
+              <View style={[styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}]}>
+                <Text style={styles.letter}>{xIndex*size+yIndex}</Text>
+              </View>
+            </TouchableOpacity>
           ))
         )}
       </View>
