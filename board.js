@@ -12,13 +12,30 @@ var cellSize = Math.floor(width / size);
 var letterSize = Math.floor(cellSize * .75);
 
 export default class MatchThree extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: null,
+    }
+  }
+
+  click(index) {
+    console.log(`clicked id = ${index}`);
+    if (this.state.selected) {
+      console.log(`${this.state.selected} swap with ${index}`);
+      this.setState({ selected: null });
+    } else {
+      this.setState({ selected: index });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         {[...Array(size)].map((x, xIndex) =>
           [...Array(size)].map((y, yIndex) => (
             <TouchableOpacity key={xIndex*size+yIndex}
-              onPress={() => console.log(xIndex*size+yIndex) }>
+              onPress={() => this.click(xIndex*size+yIndex)}>
               <View style={[styles.tile, {left: cellSize * xIndex, top: cellSize * yIndex}]}>
                 <Text style={styles.letter}>{xIndex*size+yIndex}</Text>
               </View>
