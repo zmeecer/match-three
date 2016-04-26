@@ -1,20 +1,28 @@
 'use strict';
 
 import React, {
+  Component,
   StyleSheet,
   View,
 } from 'react-native';
 import Board from './board.js';
 
-var Main = React.createClass({
+const size = 6;
+const { width } = require('Dimensions').get('window');
+const cellSize = Math.floor(width / size);
+
+class Main extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Board/>
+        <Board
+          size={size}
+          cellSize={cellSize}
+        />
       </View>
     )
-  },
-});
+  }
+}
 
 var styles = StyleSheet.create({
   container: {
@@ -25,4 +33,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Main;
+export default Main;
