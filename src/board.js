@@ -63,9 +63,8 @@ class Board extends Component {
 
       if (this.isNeighborTiles(sourceTile, destTile)) {
         this.swapTiles(sourceTile, destTile);
-      } else {
-        this.setState({ selected: null });
       }
+      this.setState({ selected: null });
     } else {
       this.setState({ selected: id });
     }
