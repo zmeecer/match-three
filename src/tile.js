@@ -1,4 +1,5 @@
 import React, {
+  Animated,
   Component,
   StyleSheet,
   Text,
@@ -10,23 +11,30 @@ import React, {
 class Tile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bounceValue: new Animated.Value(1),
+    }
   }
 
   render() {
+    let scale = this.props.selected ? 0.9 : this.state.bounceValue;
     return (
       <TouchableOpacity
-        onPress={this.props.click(this.props.id)}>
-        <View
+        onPress={this.props.click}>
+        <Animated.View
           style={[
             styles.tile, {
               width: this.props.cellSize,
               height: this.props.cellSize,
               left: this.props.position.left,
               top: this.props.position.top,
+              transform: [
+                { scale: scale },
+              ]
             }
           ]}>
-          <Text style={styles.letter}>{this.props.id}</Text>
-        </View>
+          <Text style={styles.letter}>{this.props.label}</Text>
+        </Animated.View>
       </TouchableOpacity>
     );
   }

@@ -33,14 +33,41 @@ class Board extends Component {
     return tiles;
   }
 
-  click(e, index) {
-    // debugger;
-    console.table(`clicked id = ${index}`);
+  getTileById(id) {
+    return this.state.tiles.find((item) => (
+      item.id === id
+    ))
+  }
+
+  isNeighborTiles(source, dest) {
+    return (
+      (Math.abs(source.position.left-dest.position.left) == 1
+        && source.position.top === dest.position.top)
+      ||
+      (Math.abs(source.position.top-dest.position.top) == 1
+      && source.position.left === dest.position.left)
+    );
+  }
+
+  swapTiles(source, dest) {
+    const swapPosition = source.position;
+    source.position = dest.position;
+    dest.position = swapPosition;
+    this.setState({ selected: null })
+  }
+
+  click(id) {
     if (this.state.selected) {
-      console.log(`${this.state.selected} swap with ${index}`);
-      this.setState({ selected: null });
+      const sourceTile = this.getTileById(this.state.selected);
+      const destTile = this.getTileById(id);
+
+      if (this.isNeighborTiles(sourceTile, destTile)) {
+        this.swapTiles(sourceTile, destTile);
+      } else {
+        this.setState({ selected: null });
+      }
     } else {
-      this.setState({ selected: index });
+      this.setState({ selected: id });
     }
   }
 
@@ -55,14 +82,15 @@ class Board extends Component {
       >
         {this.state.tiles.map((tile, index) =>
           <Tile
-            id={tile.id}
             key={index}
+            label={tile.id}
             position={{
               left: this.props.cellSize * tile.position.left,
               top: this.props.cellSize * tile.position.top,
             }}
             cellSize={this.props.cellSize}
-            click={() => this.click.bind(this)}
+            selected={tile.id === this.state.selected}
+            click={this.click.bind(this, tile.id)}
           />
         )}
       </View>
