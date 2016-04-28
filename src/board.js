@@ -7,6 +7,8 @@ import React, {
 } from 'react-native';
 import Tile from './tile.js';
 
+const colorCount = 5;
+
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,10 @@ class Board extends Component {
       selected: null,
       tiles: this.initializeTiles(size),
     }
+  }
+
+  getRandom(size) {
+     return Math.round(Math.random() * 10 % size);
   }
 
   initializeTiles(size) {
@@ -27,6 +33,7 @@ class Board extends Component {
             left: x,
             top: y,
           },
+          type: this.getRandom(colorCount),
         }
       }
     }
@@ -82,6 +89,7 @@ class Board extends Component {
         {this.state.tiles.map((tile, index) =>
           <Tile
             key={index}
+            type={tile.type}
             label={tile.id}
             position={{
               left: this.props.cellSize * tile.position.left,

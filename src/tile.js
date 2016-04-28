@@ -8,6 +8,15 @@ import React, {
   PropTypes,
 } from 'react-native';
 
+const colors = [
+  "#FFFC19",
+  "#5B86CC",
+  "#38FF49",
+  "#FF5C4D",
+  "#E4A6FF",
+  "#937DB2",
+];
+
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +26,11 @@ class Tile extends Component {
       left: new Animated.Value(this.props.position.left),
       top: new Animated.Value(this.props.position.top),
     }
+  }
+
+  getColor(index) {
+    console.log(this.index);
+    return colors[index];
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -38,7 +52,6 @@ class Tile extends Component {
   }
 
   componentDidMount() {
-    console.log("did mount");
     Animated.timing(
       this.state.fadeAnim,
       {toValue: 1, duration: 500}
@@ -50,20 +63,20 @@ class Tile extends Component {
   }
 
   render() {
-    let scale = this.props.selected ? 0.9 : this.state.bounceValue;
     return (
       <TouchableOpacity
         onPress={this.props.click}>
         <Animated.View
           style={[
             styles.tile, {
+              backgroundColor: this.getColor(this.props.type),
               width: this.props.cellSize,
               height: this.props.cellSize,
               left: this.state.left,
               top: this.state.top,
-              opacity: this.state.fadeAnim,
+              opacity: this.props.selected ? 0.5 : this.state.fadeAnim,
               transform: [
-                { scale: scale },
+                { scale: this.state.bounceValue },
               ]
             }
           ]}>
@@ -85,13 +98,12 @@ export default Tile;
 const styles = StyleSheet.create({
   tile: {
     position: 'absolute',
-    borderRadius: 10,
+    // borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#BEE1D2',
   },
   letter: {
     color: '#333',
-    fontSize: 50,
+    fontSize: 36,
   },
 });
