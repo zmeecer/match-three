@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "react": "^0.14.8",
-    "react-native": "^0.23.1"
+    "react-native": "^0.23.1",
+    "react-native-navbar": "^1.4.2"
   },
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1"

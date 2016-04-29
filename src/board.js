@@ -81,6 +81,8 @@ class Board extends Component {
     return (
       <View
         style={{
+          flex: 10,
+          alignSelf: 'flex-start',
           width: this.props.cellSize * this.props.size,
           height: this.props.cellSize * this.props.size,
           backgroundColor: '#ddFCFF',
