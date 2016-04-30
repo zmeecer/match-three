@@ -29,7 +29,6 @@ class Tile extends Component {
   }
 
   getColor(index) {
-    console.log(this.index);
     return colors[index];
   }
 

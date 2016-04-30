@@ -6,7 +6,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 import Tile from './tile.js';
-
+import Utils from './utils.js';
 const colorCount = 5;
 
 class Board extends Component {
@@ -19,8 +19,8 @@ class Board extends Component {
     }
   }
 
-  getRandom(size) {
-     return Math.round(Math.random() * 10 % size);
+  checkBoard() {
+    Utils.findRanges(this.state.tiles, this.props.size);
   }
 
   initializeTiles(size) {
@@ -29,11 +29,10 @@ class Board extends Component {
       for (let y = 0; y < size; y++) {
         tiles[x*size+y] = {
           id: x*size+y,
-          position: {
-            left: x,
-            top: y,
-          },
-          type: this.getRandom(colorCount),
+          left: x,
+          top: y,
+          type: Utils.getRandom(colorCount),
+          deletable: false,
         }
       }
     }
@@ -46,21 +45,10 @@ class Board extends Component {
     ))
   }
 
-  isNeighborTiles(source, dest) {
-    return (
-      (Math.abs(source.position.left-dest.position.left) == 1
-        && source.position.top === dest.position.top)
-      ||
-      (Math.abs(source.position.top-dest.position.top) == 1
-      && source.position.left === dest.position.left)
-    );
-  }
-
   swapTiles(source, dest) {
-    const swapPosition = source.position;
-    source.position = dest.position;
-    dest.position = swapPosition;
-    this.setState({ selected: null })
+    Utils.swapPosition(source, dest);
+    this.setState({ selected: null });
+    this.checkBoard();
   }
 
   click(id) {
@@ -68,7 +56,7 @@ class Board extends Component {
       const sourceTile = this.getTileById(this.state.selected);
       const destTile = this.getTileById(id);
 
-      if (this.isNeighborTiles(sourceTile, destTile)) {
+      if (Utils.areNeighbors(sourceTile, destTile)) {
         this.swapTiles(sourceTile, destTile);
       }
       this.setState({ selected: null });
@@ -94,8 +82,8 @@ class Board extends Component {
             type={tile.type}
             label={tile.id}
             position={{
-              left: this.props.cellSize * tile.position.left,
-              top: this.props.cellSize * tile.position.top,
+              left: this.props.cellSize * tile.left,
+              top: this.props.cellSize * tile.top,
             }}
             cellSize={this.props.cellSize}
             selected={tile.id === this.state.selected}
