@@ -20,7 +20,8 @@ class Board extends Component {
   }
 
   checkBoard() {
-    Utils.findRanges(this.state.tiles, this.props.size);
+    const findedRanges = Utils.findRanges(this.state.tiles, this.props.size);
+    Utils.deleteRanges(this.state.tiles, findedRanges)
   }
 
   initializeTiles(size) {
@@ -39,22 +40,16 @@ class Board extends Component {
     return tiles;
   }
 
-  getTileById(id) {
-    return this.state.tiles.find((item) => (
-      item.id === id
-    ))
-  }
-
   swapTiles(source, dest) {
     Utils.swapPosition(source, dest);
-    this.setState({ selected: null });
     this.checkBoard();
+    this.setState({ selected: null });
   }
 
   click(id) {
     if (this.state.selected) {
-      const sourceTile = this.getTileById(this.state.selected);
-      const destTile = this.getTileById(id);
+      const sourceTile = Utils.getItemById(this.state.tiles, this.state.selected);
+      const destTile = Utils.getItemById(this.state.tiles, id);
 
       if (Utils.areNeighbors(sourceTile, destTile)) {
         this.swapTiles(sourceTile, destTile);

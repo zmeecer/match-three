@@ -1,9 +1,12 @@
 export default class Utils {
   static findRanges(tiles, size) {
     function findRangesByKey(tiles, size, key) {
+      let findedRanges = [];
       for (let lineIndex = 0; lineIndex < size; lineIndex++) {
         let line = tiles.filter(
           (item) => item[key] == lineIndex
+        ).sort(
+          (item1, item2) => key === 'top' ? item1.left - item2.left : item1.top - item2.top
         );
 
         for(let i = 0; i < line.length;) {
@@ -21,6 +24,12 @@ export default class Utils {
               }
               if (rangeCount > 2) {
                 console.log(`delete ${key}: pos ${lineIndex} ${i} range ${rangeCount}`);
+                findedRanges.push({
+                  line: lineIndex,
+                  position: i,
+                  count: rangeCount,
+                  direction: key,
+                });
               }
               i += rangeCount;
             }
@@ -29,14 +38,43 @@ export default class Utils {
           }
         }
       }
+      return findedRanges;
+    }
+    const horisonalRanges = findRangesByKey(tiles, size, 'top');
+    const verticalRanges = findRangesByKey(tiles, size, 'left');
+    return [...horisonalRanges, ...verticalRanges];
+  }
+
+  static deleteRanges(tiles, ranges) {
+    function getItemIndexByPos(items, x, y) {
+      let item = items.find((item) => (
+        item.left === x && item.top === y
+      ));
+      return items.indexOf(item);
     }
 
-    findRangesByKey(tiles, size, "top")
-    findRangesByKey(tiles, size, "left")
+    for(let i=0; i<ranges.length; i++) {
+      for(let j=0; j<ranges[i].count; j++) {
+        let deletedIndex;
+        if (ranges[i].direction === 'top') {
+          deletedIndex = getItemIndexByPos(tiles, j + ranges[i].position, ranges[i].line);
+        } else {
+          deletedIndex = getItemIndexByPos(tiles, ranges[i].line, j + ranges[i].position);
+        }
+        console.log('deleted item id:' + tiles[deletedIndex].id)
+        // tiles.splice(deletedIndex,1);
+      }
+    }
   }
 
   static getRandom(size) {
      return Math.round(Math.random() * 10 % size);
+  }
+
+  static getItemById(items, id) {
+    return items.find((item) => (
+      item.id === id
+    ))
   }
 
   static areNeighbors(source, dest) {
