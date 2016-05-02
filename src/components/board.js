@@ -6,7 +6,7 @@ import React, {
   TouchableOpacity,
 } from 'react-native';
 import Tile from './tile.js';
-import Utils from './utils.js';
+import Utils from '../utils.js';
 const colorCount = 5;
 
 class Board extends Component {
@@ -22,22 +22,6 @@ class Board extends Component {
   checkBoard() {
     const findedRanges = Utils.findRanges(this.state.tiles, this.props.size);
     Utils.deleteRanges(this.state.tiles, findedRanges)
-  }
-
-  initializeTiles(size) {
-    let tiles = Array(size * size);
-    for (let x = 0; x < size; x++) {
-      for (let y = 0; y < size; y++) {
-        tiles[x*size+y] = {
-          id: x*size+y,
-          left: x,
-          top: y,
-          type: Utils.getRandom(colorCount),
-          deletable: false,
-        }
-      }
-    }
-    return tiles;
   }
 
   swapTiles(source, dest) {
