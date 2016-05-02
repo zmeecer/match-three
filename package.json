@@ -1,6 +1,12 @@
 {
   "name": "MatchThree",
-  "version": "0.0.1",
+  "description": "Simple game Match3 or 3-in-row",
+  "version": "0.1.0",
+  "licanse": "MIT",
+  "author": {
+    "name": "Źmicier Jaraševič",
+    "email": "zmeecer@gmail.com"
+  },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
@@ -11,5 +17,9 @@
   },
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zmeecer/match-three.git"
   }
 }
