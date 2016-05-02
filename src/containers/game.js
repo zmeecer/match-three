@@ -4,6 +4,7 @@ import React, {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { initBoard } from '../actions/board';
 
 import NavigationBar from 'react-native-navbar';
 import Board from '../components/board.js';
@@ -13,6 +14,11 @@ const { width } = require('Dimensions').get('window');
 const cellSize = Math.floor(width / size);
 
 class Game extends Component {
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(initBoard(size));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -25,14 +31,24 @@ class Game extends Component {
             }}
           />
         </View>
-        <Board
-          size={size}
-          cellSize={cellSize}
-        />
+        { this.props.board.tiles &&
+          <Board
+            tiles={this.props.board.tiles}
+            cellSize={cellSize}
+          />
+        }
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => (
+  {
+    board: state.board,
+  }
+);
+
+export default connect(mapStateToProps)(Game);
 
 var styles = StyleSheet.create({
   container: {
@@ -43,5 +59,3 @@ var styles = StyleSheet.create({
     backgroundColor: '#646B62',
   },
 });
-
-export default Game;

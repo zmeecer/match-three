@@ -1,5 +1,5 @@
-import Board from './board';
+import board from './board';
 
 export {
-  Board
+  board
 };

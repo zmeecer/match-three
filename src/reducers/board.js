@@ -1,11 +1,11 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  tiles: 0,
-  seelected: null,
+  tiles: [],
+  selected: null,
 };
 
-export default function counter(state = initialState, action = {}) {
+export default function board(state = initialState, action = {}) {
   switch (action.type) {
     case types.SWAP_TILES:
       return {

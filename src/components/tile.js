@@ -23,8 +23,8 @@ class Tile extends Component {
     this.state = {
       bounceValue: new Animated.Value(0.7),
       fadeAnim: new Animated.Value(0),
-      left: new Animated.Value(this.props.position.left),
-      top: new Animated.Value(this.props.position.top),
+      left: new Animated.Value(this.props.tile.left*this.props.cellSize),
+      top: new Animated.Value(this.props.tile.top*this.props.cellSize),
     }
   }
 
@@ -33,17 +33,17 @@ class Tile extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.position.left != this.props.position.left) {
+    if (nextProps.tile.left != this.props.tile.left) {
       Animated.timing(
         this.state.left,
-        { toValue: nextProps.position.left, duration: 200 }
+        { toValue: nextProps.tile.left*this.props.cellSize, duration: 200 }
       ).start();
       return false;
     }
-    if (nextProps.position.top != this.props.position.top) {
+    if (nextProps.top != this.props.top) {
       Animated.timing(
         this.state.top,
-        { toValue: nextProps.position.top, duration: 200 }
+        { toValue: nextProps.tile.top*this.props.cellSize, duration: 200 }
       ).start();
       return false;
     }
@@ -71,8 +71,8 @@ class Tile extends Component {
               backgroundColor: this.getColor(this.props.type),
               width: this.props.cellSize,
               height: this.props.cellSize,
-              left: this.state.left,
-              top: this.state.top,
+              left: this.state.left*this.props.cellSize,
+              top: this.state.top*this.props.cellSize,
               opacity: this.props.selected ? 0.5 : this.state.fadeAnim,
               transform: [
                 { scale: this.state.bounceValue },

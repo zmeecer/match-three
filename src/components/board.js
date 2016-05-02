@@ -1,21 +1,16 @@
 import React, {
   Component,
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import Tile from './tile.js';
 import Utils from '../utils.js';
-const colorCount = 5;
 
 class Board extends Component {
   constructor(props) {
     super(props);
-    const { size } = this.props;
     this.state = {
       selected: null,
-      tiles: this.initializeTiles(size),
     }
   }
 
@@ -55,15 +50,10 @@ class Board extends Component {
           backgroundColor: '#ddFCFF',
         }}
       >
-        {this.state.tiles.map((tile, index) =>
+        {this.props.tiles.map((tile, index) =>
           <Tile
             key={index}
-            type={tile.type}
-            label={tile.id}
-            position={{
-              left: this.props.cellSize * tile.left,
-              top: this.props.cellSize * tile.top,
-            }}
+            tile={tile}
             cellSize={this.props.cellSize}
             selected={tile.id === this.state.selected}
             click={this.click.bind(this, tile.id)}
