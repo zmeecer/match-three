@@ -23,8 +23,8 @@ class Tile extends Component {
     this.state = {
       bounceValue: new Animated.Value(0.7),
       fadeAnim: new Animated.Value(0),
-      left: new Animated.Value(this.props.position.left),
-      top: new Animated.Value(this.props.position.top),
+      left: new Animated.Value(this.props.left*this.props.cellSize),
+      top: new Animated.Value(this.props.top*this.props.cellSize),
     }
   }
 
@@ -33,17 +33,17 @@ class Tile extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.position.left != this.props.position.left) {
+    if (nextProps.left != this.props.left) {
       Animated.timing(
         this.state.left,
-        { toValue: nextProps.position.left, duration: 200 }
+        { toValue: nextProps.left*nextProps.cellSize, duration: 2000 }
       ).start();
       return false;
     }
-    if (nextProps.position.top != this.props.position.top) {
+    if (nextProps.top != this.props.top) {
       Animated.timing(
         this.state.top,
-        { toValue: nextProps.position.top, duration: 200 }
+        { toValue: nextProps.top*nextProps.cellSize, duration: 2000 }
       ).start();
       return false;
     }
@@ -79,30 +79,25 @@ class Tile extends Component {
               ]
             }
           ]}>
-          <Text style={styles.letter}>{this.props.label}</Text>
+          <Text style={styles.letter}>
+            {this.props.label}/{this.props.left}-{this.props.top}
+          </Text>
         </Animated.View>
       </TouchableOpacity>
     );
   }
 }
 
-// Tile.propTypes = {
-//   id: propTypes.string.isRequired,
-//   position: PropTypes.object.isRequired,
-//   click: propTypes.func.isRequired,
-// }
-
 export default Tile;
 
 const styles = StyleSheet.create({
   tile: {
     position: 'absolute',
-    // borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   letter: {
     color: '#333',
-    fontSize: 36,
+    fontSize: 24,
   },
 });

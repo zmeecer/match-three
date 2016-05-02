@@ -46,25 +46,31 @@ export default class Utils {
   }
 
   static deleteRanges(tiles, ranges) {
-    function getItemIndexByPos(items, x, y) {
+    function getItemIdByPos(items, x, y) {
       let item = items.find((item) => (
         item.left === x && item.top === y
       ));
-      return items.indexOf(item);
+      return item.id;
     }
-
+    let idsForRemoving = [];
     for(let i=0; i<ranges.length; i++) {
+      // console.log("before: " + tiles.map(i => `${i.id}/${i.left}-${i.top}`))
       for(let j=0; j<ranges[i].count; j++) {
         let deletedIndex;
         if (ranges[i].direction === 'top') {
-          deletedIndex = getItemIndexByPos(tiles, j + ranges[i].position, ranges[i].line);
+          idsForRemoving.push(getItemIdByPos(tiles, j + ranges[i].position, ranges[i].line));
         } else {
-          deletedIndex = getItemIndexByPos(tiles, ranges[i].line, j + ranges[i].position);
+          idsForRemoving.push(getItemIdByPos(tiles, ranges[i].line, j + ranges[i].position));
         }
-        console.log('deleted item id:' + tiles[deletedIndex].id)
-        // tiles.splice(deletedIndex,1);
+        // console.log('deleted item id:' + deletedIndex && tiles[deletedIndex].id)
+        // tiles.splice(deletedIndex, 1);
       }
+      // console.log("after: " + tiles.map(i => `${i.id}/${i.left}-${i.top}`))
     }
+    return tiles.filter(item =>
+      idsForRemoving.indexOf(item.id) < 0
+    )
+
   }
 
   static getRandom(size) {

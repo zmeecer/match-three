@@ -21,7 +21,7 @@ class Board extends Component {
 
   checkBoard() {
     const findedRanges = Utils.findRanges(this.state.tiles, this.props.size);
-    Utils.deleteRanges(this.state.tiles, findedRanges)
+    return Utils.deleteRanges(this.state.tiles, findedRanges)
   }
 
   initializeTiles(size) {
@@ -33,7 +33,6 @@ class Board extends Component {
           left: x,
           top: y,
           type: Utils.getRandom(colorCount),
-          deletable: false,
         }
       }
     }
@@ -42,8 +41,12 @@ class Board extends Component {
 
   swapTiles(source, dest) {
     Utils.swapPosition(source, dest);
-    this.checkBoard();
-    this.setState({ selected: null });
+    let filteredItems = this.checkBoard();
+    console.log("filtered: " + filteredItems.map(i => `${i.id}/${i.left}-${i.top}`))
+    this.setState({
+      tiles: filteredItems,
+      selected: null,
+    });
   }
 
   click(id) {
@@ -64,7 +67,6 @@ class Board extends Component {
     return (
       <View
         style={{
-          flex: 10,
           alignSelf: 'flex-start',
           width: this.props.cellSize * this.props.size,
           height: this.props.cellSize * this.props.size,
@@ -76,10 +78,8 @@ class Board extends Component {
             key={index}
             type={tile.type}
             label={tile.id}
-            position={{
-              left: this.props.cellSize * tile.left,
-              top: this.props.cellSize * tile.top,
-            }}
+            left={tile.left}
+            top={tile.top}
             cellSize={this.props.cellSize}
             selected={tile.id === this.state.selected}
             click={this.click.bind(this, tile.id)}

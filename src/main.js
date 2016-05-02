@@ -8,7 +8,7 @@ import React, {
 import NavigationBar from 'react-native-navbar';
 import Board from './board.js';
 
-const size = 6;
+const size = 3;
 const { width } = require('Dimensions').get('window');
 const cellSize = Math.floor(width / size);
 
