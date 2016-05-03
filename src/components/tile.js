@@ -23,8 +23,8 @@ class Tile extends Component {
     this.state = {
       bounceValue: new Animated.Value(0.7),
       fadeAnim: new Animated.Value(0),
-      left: new Animated.Value(this.props.tile.left*this.props.cellSize),
-      top: new Animated.Value(this.props.tile.top*this.props.cellSize),
+      left: new Animated.Value(this.props.tile.left * this.props.cellSize),
+      top: new Animated.Value(this.props.tile.top * this.props.cellSize),
     }
   }
 
@@ -36,14 +36,14 @@ class Tile extends Component {
     if (nextProps.tile.left != this.props.tile.left) {
       Animated.timing(
         this.state.left,
-        { toValue: nextProps.tile.left*this.props.cellSize, duration: 200 }
+        { toValue: nextProps.tile.left * this.props.cellSize, duration: 200 }
       ).start();
       return false;
     }
-    if (nextProps.top != this.props.top) {
+    if (nextProps.tile.top != this.props.tile.top) {
       Animated.timing(
         this.state.top,
-        { toValue: nextProps.tile.top*this.props.cellSize, duration: 200 }
+        { toValue: nextProps.tile.top * this.props.cellSize, duration: 200 }
       ).start();
       return false;
     }
@@ -62,24 +62,26 @@ class Tile extends Component {
   }
 
   render() {
+    console.log(this.state.left, this.state.top)
     return (
       <TouchableOpacity
         onPress={this.props.click}>
         <Animated.View
           style={[
             styles.tile, {
+              position: 'absolute',
               backgroundColor: this.getColor(this.props.type),
               width: this.props.cellSize,
               height: this.props.cellSize,
-              left: this.state.left*this.props.cellSize,
-              top: this.state.top*this.props.cellSize,
+              left: this.state.left * this.props.cellSize,
+              top: this.state.top * this.props.cellSize,
               opacity: this.props.selected ? 0.5 : this.state.fadeAnim,
               transform: [
                 { scale: this.state.bounceValue },
               ]
             }
           ]}>
-          <Text style={styles.letter}>{this.props.label}</Text>
+          <Text style={styles.letter}>{this.props.tile.id}</Text>
         </Animated.View>
       </TouchableOpacity>
     );
@@ -97,7 +99,6 @@ export default Tile;
 const styles = StyleSheet.create({
   tile: {
     position: 'absolute',
-    // borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

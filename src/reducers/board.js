@@ -7,6 +7,11 @@ const initialState = {
 
 export default function board(state = initialState, action = {}) {
   switch (action.type) {
+    case types.INIT_BOARD:
+      return {
+        ...state,
+        tiles: action.tiles
+      };
     case types.SWAP_TILES:
       return {
         ...state,

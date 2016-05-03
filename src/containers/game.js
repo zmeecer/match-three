@@ -9,12 +9,12 @@ import { initBoard } from '../actions/board';
 import NavigationBar from 'react-native-navbar';
 import Board from '../components/board.js';
 
-const size = 6;
+const size = 3;
 const { width } = require('Dimensions').get('window');
 const cellSize = Math.floor(width / size);
 
 class Game extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     dispatch(initBoard(size));
   }
@@ -34,6 +34,7 @@ class Game extends Component {
         { this.props.board.tiles &&
           <Board
             tiles={this.props.board.tiles}
+            size={size}
             cellSize={cellSize}
           />
         }
