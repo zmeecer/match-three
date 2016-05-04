@@ -21,18 +21,12 @@ class Board extends Component {
 
   swapTiles(source, dest) {
     Utils.swapPosition(source, dest);
-    this.checkBoard();
-    this.setState({ selected: null });
+    // this.checkBoard();
   }
 
   click(id) {
     if (this.state.selected) {
-      const sourceTile = Utils.getItemById(this.state.tiles, this.state.selected);
-      const destTile = Utils.getItemById(this.state.tiles, id);
-
-      if (Utils.areNeighbors(sourceTile, destTile)) {
-        this.swapTiles(sourceTile, destTile);
-      }
+      this.props.onSwap(this.state.selected, id);
       this.setState({ selected: null });
     } else {
       this.setState({ selected: id });
@@ -43,7 +37,7 @@ class Board extends Component {
     return (
       <View
         style={{
-          flex: 10,
+          flex: 0,
           alignSelf: 'flex-start',
           width: this.props.cellSize * this.props.size,
           height: this.props.cellSize * this.props.size,

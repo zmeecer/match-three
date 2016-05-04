@@ -70,28 +70,4 @@ export default class Utils {
   static getRandom(size) {
      return Math.round(Math.random() * 10 % size);
   }
-
-  static getItemById(items, id) {
-    return items.find((item) => (
-      item.id === id
-    ))
-  }
-
-  static areNeighbors(source, dest) {
-    return (
-      (Math.abs(source.left-dest.left) == 1
-        && source.top === dest.top)
-      ||
-      (Math.abs(source.top-dest.top) == 1
-      && source.left === dest.left)
-    );
-  }
-
-  static swapPosition(source, dest) {
-    const { left, top } = source;
-    source.left = dest.left;
-    source.top = dest.top;
-    dest.left = left;
-    dest.top = top;
-  }
 }

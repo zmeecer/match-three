@@ -31,7 +31,7 @@ class Tile extends Component {
   getColor(index) {
     return colors[index];
   }
-
+  
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.tile.left != this.props.tile.left) {
       Animated.timing(
@@ -62,19 +62,17 @@ class Tile extends Component {
   }
 
   render() {
-    console.log(this.state.left, this.state.top)
     return (
       <TouchableOpacity
         onPress={this.props.click}>
         <Animated.View
           style={[
             styles.tile, {
-              position: 'absolute',
-              backgroundColor: this.getColor(this.props.type),
+              backgroundColor: this.getColor(this.props.tile.type),
               width: this.props.cellSize,
               height: this.props.cellSize,
-              left: this.state.left * this.props.cellSize,
-              top: this.state.top * this.props.cellSize,
+              left: this.state.left,
+              top: this.state.top,
               opacity: this.props.selected ? 0.5 : this.state.fadeAnim,
               transform: [
                 { scale: this.state.bounceValue },
@@ -88,14 +86,6 @@ class Tile extends Component {
   }
 }
 
-// Tile.propTypes = {
-//   id: propTypes.string.isRequired,
-//   position: PropTypes.object.isRequired,
-//   click: propTypes.func.isRequired,
-// }
-
-export default Tile;
-
 const styles = StyleSheet.create({
   tile: {
     position: 'absolute',
@@ -107,3 +97,5 @@ const styles = StyleSheet.create({
     fontSize: 36,
   },
 });
+
+export default Tile;

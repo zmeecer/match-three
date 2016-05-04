@@ -19,10 +19,20 @@ class Game extends Component {
     dispatch(initBoard(size));
   }
 
+  onSwap(sourceId, destId) {
+    alert(`${sourceId} ${destId}`)
+    const { dispatch } = this.props;
+    dispatch(swapTiles(sourceId, destId));
+  }
+
+  onSelect(id) {
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, width: width}}>
+        <View style={styles.toolbar}>
           <NavigationBar
             title={{ title: 'Match Three' }}
             rightButton={{
@@ -36,6 +46,8 @@ class Game extends Component {
             tiles={this.props.board.tiles}
             size={size}
             cellSize={cellSize}
+            onSwap={this.onSwap}
+            onSelect={this.onSelect}
           />
         }
       </View>
@@ -52,6 +64,11 @@ const mapStateToProps = (state) => (
 export default connect(mapStateToProps)(Game);
 
 var styles = StyleSheet.create({
+  toolbar: {
+    flex: 0,
+    width: width,
+    flexDirection: 'column',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
