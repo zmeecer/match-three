@@ -3,14 +3,15 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { initBoard } from './middleware';
+import { initBoard, swapTiles } from './middleware';
 import * as reducers from './reducers';
 import Game from './containers/game';
 
 const createStoreWithMiddleware = applyMiddleware(
   thunk,
-  createLogger(),
   initBoard(),
+  swapTiles(),
+  createLogger(),
 )(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);

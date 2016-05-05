@@ -4,7 +4,7 @@ import React, {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { initBoard } from '../actions/board';
+import { initBoard, swapTiles } from '../actions/board';
 
 import NavigationBar from 'react-native-navbar';
 import Board from '../components/board.js';
@@ -20,7 +20,6 @@ class Game extends Component {
   }
 
   onSwap(sourceId, destId) {
-    alert(`${sourceId} ${destId}`)
     const { dispatch } = this.props;
     dispatch(swapTiles(sourceId, destId));
   }
@@ -46,8 +45,8 @@ class Game extends Component {
             tiles={this.props.board.tiles}
             size={size}
             cellSize={cellSize}
-            onSwap={this.onSwap}
-            onSelect={this.onSelect}
+            onSwap={this.onSwap.bind(this)}
+            onSelect={this.onSelect.bind(this)}
           />
         }
       </View>

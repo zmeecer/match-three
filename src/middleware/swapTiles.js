@@ -32,18 +32,18 @@ function areNeighbors(items, source, dest) {
   );
 }
 
-export default function swapTilesMiddleware() {
+export default function swapTiles() {
   return ({ getState }) => next => action => {
     if (action.type === types.SWAP_TILES) {
       const { tiles } = getState().board;
       const source = getItemById(tiles, action.sourceId);
       const dest = getItemById(tiles, action.destId);
-
+      const newTiles = swapItems(tiles, source, dest);
 
       if (areNeighbors(tiles, source, dest)) {
         next({
           ...action,
-          tiles: swapItems(tiles, source, dest);
+          tiles: newTiles,
         })
       } else {
         next(action);

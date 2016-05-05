@@ -7,11 +7,11 @@ export function initBoard(size) {
   };
 }
 
-export function swapTiles(source, dest) {
+export function swapTiles(sourceId, destId) {
   return {
     type: types.SWAP_TILES,
-    source,
-    dest,
+    sourceId,
+    destId,
   };
 }
 
